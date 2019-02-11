@@ -154,6 +154,7 @@ class Tracker(threading.Thread):
     def set_trackMaturity(self, value):
         if value > 3 and value <= 10:
             self.trackMaturity = value
+            print("MotionTracker::trackMaturity: %d" % value)
             if self.config:
                 self.config.conf['trackMaturity'] = value
 
@@ -163,6 +164,7 @@ class Tracker(threading.Thread):
     def set_maxDist(self, value):
         if value > 0 and value < 25:
             Track.maxDist = value
+            print("MotionTracker::maxDist: %d" % value)
             if self.config:
                 self.config.conf['maxDist'] = value
 
