@@ -24,7 +24,10 @@ class udpBeep(threading.Thread):
         self.sock=socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
-        self.sock.sendto (bytes('UDPBeep Thread Start').encode('utf-8'), (bytes(self.udpip).encode('utf-8'), self.port))
+        try:
+            self.sock.sendto (bytes('UDPBeep Thread Start').encode('utf-8'), (bytes(self.udpip).encode('utf-8'), self.port))
+        except:
+            logging.warning('No network available !')
         self.daemon = True
         self.event.clear()
         self.start()
@@ -41,7 +44,6 @@ class udpBeep(threading.Thread):
                     self.sock.sendto(bytes(EVENTMSG).encode('utf-8'), (self.udpip, self.port)) 
                 except socket.error as msg:
                     logging.warning('udp error')
-                    continue
                 self.event.clear()
 
 
